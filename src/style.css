@@ -3,7 +3,8 @@ header{
     top: 0;
     left: 0;
     width: 100%;
-    background-color: lightgray;
+    background-color: black;
+    color: white;
     display: inline-block;
     height: fit-content;
     margin: 0;
@@ -19,5 +20,16 @@ footer{
     left: 0;
     width: 100%;
     margin-bottom: 0;
+    background-color: black;
+    color: white;
+}
+#content{
+    display: inline-block;
+    width: 100%;
+    padding-left: 1em;
+    margin-top: 5em; 
+}
+#io{
+    width: 80%;
     background-color: lightgray;
 }

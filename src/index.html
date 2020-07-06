@@ -13,10 +13,11 @@
         </header>
         <div id="content">
             <div id="io">
-                
+                <textarea id="terminal" onkeyup="resumeExec()"></textarea>
             </div>
             <div id="codeForm">
-
+                <textarea id="scInput"></textarea>
+                <input type="button" id="submit" value="Interpret" onclick="interpret()">
             </div>
             <div id="liveChanges">
 
