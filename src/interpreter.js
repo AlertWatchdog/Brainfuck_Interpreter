@@ -26,7 +26,10 @@ function exec(){
     for(; i < sourcecode.length; i++){
         let c = sourcecode[i];
         if(c === '+')
-            arr[pointer]++;
+            if(arr[pointer] < 255)        //Emulates behavior of char (0-255) 
+                arr[pointer]++;
+            else
+                arr[pointer] = 0;
         if(c === '-')
             if(arr[pointer] > 0)        //Emulates behavior of char (0-255) 
                 arr[pointer]--;
@@ -57,6 +60,7 @@ function exec(){
             }
         if(c === ']'){
             console.log(arr);
+            console.log(pointer);
             
             if(arr[pointer] !== 0){
                 i = loop[loop.length-1];
