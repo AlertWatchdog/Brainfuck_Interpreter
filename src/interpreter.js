@@ -4,7 +4,10 @@ let pointer = 0;
 var i = 0;
 var running = false;
 
-async function interpret(){
+/**
+ * Prepares and starts interpreter function
+ */
+function interpret(){
     document.getElementById("terminal").value="";
     document.getElementById("terminal").removeAttribute("readonly");
     pointer = 0;
@@ -15,6 +18,9 @@ async function interpret(){
     exec(); 
 }
 
+/**
+ * actual interpreter for Brainfuck 
+ */
 function exec(){
     let sourcecode = document.getElementById("scInput").value; 
     for(; i < sourcecode.length; i++){
@@ -22,7 +28,10 @@ function exec(){
         if(c === '+')
             arr[pointer]++;
         if(c === '-')
-            arr[pointer]--;
+            if(arr[pointer] > 0)        //Emulates behavior of char (0-255) 
+                arr[pointer]--;
+            else
+                arr[pointer] = 255;
         if(c === '.')
                 asciiOut(arr[pointer]);
         if(c === '<')
@@ -47,15 +56,17 @@ function exec(){
                 }
             }
         if(c === ']'){
-            if(arr[pointer] > 0){
+            console.log(arr);
+            
+            if(arr[pointer] !== 0){
                 i = loop[loop.length-1];
             } else {
                 loop.pop();
             }
         }
-        if(c === ','){
+        if(c === ','){              //breaks loop for user interaction
             i++;
-            running = true;
+            running = true;         //helper to detect if loop was stopped for user interaction
             break;
         }             
     } 
@@ -64,6 +75,9 @@ function exec(){
     }    
 }
 
+/**
+ * resumes interpreting after user interaction
+ */
 function resumeExec(){
     if(i !== 0 && running === true){
         arr[pointer] = document.getElementById("terminal").value.charCodeAt(document.getElementById("terminal").value.length-1);
@@ -72,6 +86,9 @@ function resumeExec(){
     }
 }
 
+/**
+ * increases pointer and adds new cell (0) to arrayy, if last cell is reached
+ */
 function pointerInc(){
     pointer++;
     if(pointer === arr.length){
@@ -80,6 +97,9 @@ function pointerInc(){
     
 }
 
+/**
+ * decreases pointer, gives warning, when array is exceeded
+ */
 function pointerDec(){
     pointer = pointer - 1;
     if(pointer < 0){
@@ -87,11 +107,18 @@ function pointerDec(){
     }
 }
 
+/**
+ * Writes c in terminal textfield
+ * @param {*} c = charcode for ASCII
+ */
 function asciiOut(c){    
     let output = document.getElementById("terminal")
     output.value = output.value + String.fromCharCode(c);
 }
 
+/**
+ * Sets Terminal Textfield to readonly
+ */
 function deactivateTerminal(){
     let terminal = document.getElementById("terminal");
     terminal.value += "\n\n### Your Code has finished ###";
