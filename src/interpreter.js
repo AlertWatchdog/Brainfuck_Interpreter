@@ -2,8 +2,11 @@ var arr = [];
 var loop = [];
 let pointer = 0;
 var i = 0;
+var running = false;
 
 async function interpret(){
+    document.getElementById("terminal").value="";
+    document.getElementById("terminal").removeAttribute("readonly");
     pointer = 0;
     arr = [];
     loop = [];
@@ -27,9 +30,24 @@ function exec(){
         if(c === '>')
                 pointerInc();
         if(c === '[')
-                loop.push(i)
+            if(arr[pointer] !== 0)
+                loop.push(i);
+            else {
+                let tmp = true;
+                let cnt = 0;
+                while(tmp){
+                    i++;
+                    if(sourcecode[i] === '[')
+                        cnt++;
+                    if(sourcecode[i] === ']')
+                        if(cnt === 0)
+                            tmp = false;
+                        else
+                            cnt--;
+                }
+            }
         if(c === ']'){
-            if(arr[pointer] !== 0){
+            if(arr[pointer] > 0){
                 i = loop[loop.length-1];
             } else {
                 loop.pop();
@@ -37,15 +55,19 @@ function exec(){
         }
         if(c === ','){
             i++;
+            running = true;
             break;
-        }
-        console.log(arr);
-    }        
+        }             
+    } 
+    if(i === sourcecode.length){
+        deactivateTerminal();
+    }    
 }
 
 function resumeExec(){
-    if(i !== 0){
+    if(i !== 0 && running === true){
         arr[pointer] = document.getElementById("terminal").value.charCodeAt(document.getElementById("terminal").value.length-1);
+        running = false;;
         exec();
     }
 }
@@ -68,5 +90,11 @@ function pointerDec(){
 function asciiOut(c){    
     let output = document.getElementById("terminal")
     output.value = output.value + String.fromCharCode(c);
+}
+
+function deactivateTerminal(){
+    let terminal = document.getElementById("terminal");
+    terminal.value += "\n\n### Your Code has finished ###";
+    terminal.setAttribute("readonly", "readonly");
 }
 

@@ -26,10 +26,21 @@ footer{
 #content{
     display: inline-block;
     width: 100%;
-    padding-left: 1em;
     margin-top: 5em; 
+    margin-bottom: 5em;
 }
 #io{
-    width: 80%;
+    width: 95%;
     background-color: lightgray;
+    margin: auto;
+}
+#terminal{
+    background-color: black;
+    color: green;
+    width: 98%;
+    margin: 0.5em;
+}
+#scInput{
+    width: 98%;
+    margin: 0.5em;
 }
