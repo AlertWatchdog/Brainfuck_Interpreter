@@ -1,8 +1,8 @@
-var arr = [];
-var loop = [];
-let pointer = 0;
-var i = 0;
-var running = false;
+var arr = [];   //brainfuck Storage array
+var loop = [];  //Helper array for loops
+let pointer = 0;    //pointer on  brainfuck storage
+var i = 0;      //pointer for brainfuck source code
+var running = false; //helper for user input
 
 /**
  * Prepares and starts interpreter function
@@ -58,10 +58,7 @@ function exec(){
                             cnt--;
                 }
             }
-        if(c === ']'){
-            console.log(arr);
-            console.log(pointer);
-            
+        else if(c === ']'){
             if(arr[pointer] !== 0){
                 i = loop[loop.length-1];
             } else {
